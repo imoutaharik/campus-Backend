@@ -13,6 +13,14 @@ const userSchema = new Schema({
     enum:['Student', 'Teacher', 'Tutor','Admin'],
     default: 'Student'
   },
+  school:{
+    type: Schema.Types.ObjectId,
+    ref: "School"
+  },
+  isSchool:{
+    type:Boolean,
+    default: false
+  },
   photoURL: String,
   asistencia:Number,
   actitud:Number,

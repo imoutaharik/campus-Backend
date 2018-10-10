@@ -7,6 +7,10 @@ const classroomSchema = new Schema({
   carrera : {
     type: Schema.Types.ObjectId,
     ref: "Carrera"
+  },
+  school : {
+    type: Schema.Types.ObjectId,
+    ref: "School"
   }
 },{
   timestamps:{
