@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const School = require('../models/School')
+const User = require('../models/User')
 
 exports.verifyToken = (req,res,next) => {
     const token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['authorization']
@@ -8,19 +8,19 @@ exports.verifyToken = (req,res,next) => {
     jwt.verify(token, process.env.TOKEN_GENERATOR, (err, decoded)=>{
         if(err) return res.status(401).json({message:"Tu sesión caduco"})
 
-        School.findById(decoded.userId)
-        .then(school=>{
-            req.user = school
+        User.findById(decoded.userId)
+        .then(user=>{
+            req.user = user
             next()
         })
     })
     
 }
 
-exports.generateToken = (school) => {
+exports.generateToken = (user) => {
     return jwt.sign({
-        userId: school._id,
-        email: school.email
+        userId: user._id,
+        email: user.email
     },
     process.env.TOKEN_GENERATOR,
     {expiresIn:"72 hours"} 

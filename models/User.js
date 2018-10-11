@@ -15,7 +15,7 @@ const userSchema = new Schema({
   },
   school:{
     type: Schema.Types.ObjectId,
-    ref: "School"
+    ref: "User"
   },
   isSchool:{
     type:Boolean,
