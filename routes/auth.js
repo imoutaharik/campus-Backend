@@ -24,6 +24,13 @@ router.post('/signup', (req,res,next)=>{
     .catch(e=>res.status(500).json(e))
 })
 
+router.get('/admin/addClassroom', verifyToken,(req,res,next) =>{
+    Classroom.find({school:req.user._id})
+    .then(classrooms=>{
+        res.status(200).json(classrooms)
+      }).catch(e=>next(e))
+})
+
 router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
     const {email} = req.body
     const emails = email.split(',')
@@ -42,6 +49,11 @@ router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
                 }
                 User.register(user,'perrin')
                     .then(us=>{
+                        Classroom.findByIdAndUpdate(us.classroom._id, {$push:{students : us._id}})
+                        .then(classroom=>{
+                            console.log(classroom)      
+                            res.status(200).json(classroom)                     
+                        }).catch(e=>next(e))
                         console.log('created', us)
                     }).catch(e=>{
                         console.log(e)
@@ -52,6 +64,14 @@ router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
         }).catch(e=>{
             res.status(500).json(e)
         })
+})
+
+router.post('http://localhost:3000/admin/deleteClassroom', verifyToken, (req,res,next)=>{
+    Classroom.findByIdAndRemove()
+    .then(c=>{
+      console.log('se esta borrando!') 
+    })
+    .catch()
 })
 
 

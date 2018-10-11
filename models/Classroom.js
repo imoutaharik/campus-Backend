@@ -11,7 +11,8 @@ const classroomSchema = new Schema({
   school : {
     type: Schema.Types.ObjectId,
     ref: "School"
-  }
+  },
+  students : []
 },{
   timestamps:{
     updatedAt:"update_at",
