@@ -6,6 +6,7 @@ const passport = require('passport')
 
 const {generateToken, verifyToken} = require('../helpers/jwt')
 
+
 router.post('/login',
 passport.authenticate("local"),(req,res,next)=>{
     const token = generateToken(req.user)
@@ -24,17 +25,16 @@ router.post('/signup', (req,res,next)=>{
     .catch(e=>res.status(500).json(e))
 })
 
-router.get('/admin/addClassroom', verifyToken,(req,res,next) =>{
+router.get('/admin/manageClassroom', verifyToken,(req,res,next) =>{
     Classroom.find({school:req.user._id})
     .then(classrooms=>{
         res.status(200).json(classrooms)
       }).catch(e=>next(e))
   })
   
-  router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
+  router.post('/admin/manageClassroom',verifyToken,(req,res,next)=>{
     const {email} = req.body
     const emails = email.split(',')
-    //el class
   
     req.body.school = req.user._id
     
@@ -67,11 +67,13 @@ router.get('/admin/addClassroom', verifyToken,(req,res,next) =>{
   })
   
   router.post('/admin/deleteClassroom', verifyToken, (req,res,next)=>{
-    Classroom.findByIdAndRemove()
+    Classroom.findByIdAndRemove(req.body._id)
     .then(c=>{
-      console.log('se esta borrando!') 
+      res.status(201).json(c)
     })
-    .catch()
+    .catch(e=>{
+        res.status(500).json(e)
+    })
   })
 
 

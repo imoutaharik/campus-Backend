@@ -3,8 +3,10 @@ const Schema = mongoose.Schema
 
 const courseSchema = new Schema({
   name:String,
+  photoURL:String,
   horario:String,
   fecha:Date,
+  calificaciones:[],
   classroom : [{
     type: Schema.Types.ObjectId,
     ref: "Classroom"
@@ -12,7 +14,8 @@ const courseSchema = new Schema({
   teacher:[{
     type: Schema.Types.ObjectId,
     ref: "User"
-  }]
+  }],
+  manuales : []
 },{
   timestamps:{
     updatedAt:"update_at",

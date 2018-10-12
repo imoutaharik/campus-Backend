@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const Classroom = require('../models/Classroom')
 const Course = require('../models/Course')
 const passport = require('passport')
 
@@ -21,20 +22,26 @@ router.get('/manageTeachers', verifyToken, (req,res,next) =>{
 })
 
 router.post('/manageTeachers', verifyToken, (req,res,next)=>{
-
-  const {email} = req.body
-  const emails = email.split(',')
-  console.log(emails)
-
-  emails.map(e => {
-    User.register({email: e, username: e, school: req.user._id, role: 'Teacher'}, 'temporal')
-    .then(user => {
+    User.register({...req.body, school: req.user._id, role: 'Teacher'}, 'profesor')
+    .then(user=>{
       console.log(user)
-      //res.status(201).json(user)
-    })
-    .catch(err => console.log(err))
-  })
+      res.status(201).json(user)
+    }).catch(e=>res.status(500).json(e))
 
+})
+
+router.get('/teachersSelect', verifyToken, (req,res,next)=>{
+  User.find({role:"Teacher"})
+  .then(users=>{
+      res.status(200).json(users)
+    }).catch(e=>next(e))
+})
+
+router.get('/classroomsSelect', verifyToken, (req,res,next)=>{  
+  Classroom.find()
+  .then(c=>{
+      res.status(200).json(c)
+    }).catch(e=>next(e))
 })
 
 

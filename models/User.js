@@ -3,6 +3,7 @@ const Schema   = mongoose.Schema;
 const plm = require('passport-local-mongoose')
 
 const userSchema = new Schema({
+  name:String,
   email:  String,
   username: {
     type: String,
@@ -20,6 +21,10 @@ const userSchema = new Schema({
   isSchool:{
     type:Boolean,
     default: false
+  },
+  tutor:{
+    type: Schema.Types.ObjectId,
+    ref: "User"
   },
   photoURL: String,
   asistencia:Number,
