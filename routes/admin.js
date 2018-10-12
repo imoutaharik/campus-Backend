@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
+const Course = require('../models/Course')
 const passport = require('passport')
 
 const {generateToken, verifyToken} = require('../helpers/jwt')
@@ -34,6 +35,16 @@ router.post('/manageTeachers', verifyToken, (req,res,next)=>{
     .catch(err => console.log(err))
   })
 
+})
+
+
+router.post('/addCourses',verifyToken,(req,res,next)=>{ 
+  Course.create(req.body)
+      .then(course=>{
+          res.status(200).json(course)
+      }).catch(e=>{
+          res.status(500).json(e)
+      })
 })
 
 module.exports = router
