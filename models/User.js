@@ -33,6 +33,10 @@ const userSchema = new Schema({
   classroom : {
     type: Schema.Types.ObjectId,
     ref: "Classroom"
+  },
+  cursos:{
+    type: Schema.Types.ObjectId,
+    ref: "Course"
   }                      
 }, {
   timestamps: {

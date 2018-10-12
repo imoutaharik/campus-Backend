@@ -29,13 +29,13 @@ router.get('/admin/addClassroom', verifyToken,(req,res,next) =>{
     .then(classrooms=>{
         res.status(200).json(classrooms)
       }).catch(e=>next(e))
-})
-
-router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
+  })
+  
+  router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
     const {email} = req.body
     const emails = email.split(',')
     //el class
-
+  
     req.body.school = req.user._id
     
     Classroom.create(req.body)
@@ -47,7 +47,7 @@ router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
                     classroom:classroom._id,
                     username:e
                 }
-                User.register(user,'perrin')
+                User.register(user,'temporal')
                     .then(us=>{
                         Classroom.findByIdAndUpdate(us.classroom._id, {$push:{students : us._id}})
                         .then(classroom=>{
@@ -64,15 +64,15 @@ router.post('/admin/addClassroom',verifyToken,(req,res,next)=>{
         }).catch(e=>{
             res.status(500).json(e)
         })
-})
-
-router.post('http://localhost:3000/admin/deleteClassroom', verifyToken, (req,res,next)=>{
+  })
+  
+  router.post('/admin/deleteClassroom', verifyToken, (req,res,next)=>{
     Classroom.findByIdAndRemove()
     .then(c=>{
       console.log('se esta borrando!') 
     })
     .catch()
-})
+  })
 
 
 module.exports = router
