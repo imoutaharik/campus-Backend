@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
 const Classroom = require('../models/Classroom')
+const Calendar = require('../models/Calendar')
 const Course = require('../models/Course')
 const passport = require('passport')
 
@@ -73,5 +74,25 @@ router.post('/addCourses',verifyToken,(req,res,next)=>{
           res.status(500).json(e)
       })
 })
+
+
+router.get('/AddCalendarEvent',verifyToken,(req,res,next)=>{
+   Calendar.find()
+   .then(c=>{
+    res.status(200).json(c)
+  }).catch(e=>next(e))
+})
+
+router.post('/AddCalendarEvent',verifyToken,(req,res,next)=>{ 
+  Calendar.create(req.body)
+      .then(item=>{
+        res.status(200).json(item)
+      }).catch(e=>{
+      res.status(500).json(e)
+      })
+})
+
+
+
 
 module.exports = router
