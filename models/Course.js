@@ -5,16 +5,13 @@ const courseSchema = new Schema({
   name:String,
   photoURL:String,
   horario:String,
-  fecha:Date,
+  date:Date,
   calificaciones:[],
-  classroom : [{
+  classrooms : [{
     type: Schema.Types.ObjectId,
     ref: "Classroom"
   }],
-  teacher:[{
-    type: Schema.Types.ObjectId,
-    ref: "User"
-  }],
+  profesor:String,
   manuales : []
 },{
   timestamps:{
