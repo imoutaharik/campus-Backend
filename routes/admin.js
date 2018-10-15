@@ -67,7 +67,7 @@ router.get('/classroomsSelect', verifyToken, (req,res,next)=>{
 
 
 router.post('/addCourses',verifyToken,(req,res,next)=>{ 
-  Course.create(req.body)
+  Course.create({...req.body, classrooms: req.body.classrooms})
       .then(course=>{
           res.status(200).json(course)
       }).catch(e=>{

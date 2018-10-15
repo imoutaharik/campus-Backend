@@ -1,10 +1,18 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+var now = new Date()
+
 const calendarSchema = new Schema({
   name:String,
-  startDateTime:String,
-  endDateTime:String,
+  startDateTime:{
+    type:Date,
+    default: new Date(now).getTime()
+  },
+  endDateTime:{
+    type:Date,
+    default: new Date(now).getTime()
+  },
   classes:String
 },{
   timestamps:{
