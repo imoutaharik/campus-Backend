@@ -7,10 +7,7 @@ const courseSchema = new Schema({
   horario:String,
   date:Date,
   calificaciones:[],
-  classrooms : [{
-    type: Schema.Types.ObjectId,
-    ref: "Classroom"
-  }],
+  classroom :String,
   profesor:String,
   manuales : []
 },{
