@@ -36,6 +36,12 @@ router.get('/manageStudents', (req,res,next)=>{
   }).catch(e=>next(e))
 })
 
+router.get('/students/:id', verifyToken, (req,res,next)=>{
+  User.findById(req.params.id)
+  .then(student=>res.status(200).json(student))
+  .catch(e=>next(e))
+})
+
 router.get('/manageTeachers', verifyToken, (req,res,next) =>{
   User.find({role:"Teacher"})
   .then(users=>{
