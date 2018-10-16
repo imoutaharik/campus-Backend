@@ -66,6 +66,13 @@ router.get('/classroomsSelect', verifyToken, (req,res,next)=>{
     }).catch(e=>next(e))
 })
 
+router.get('/getallcourses', verifyToken, (req,res,next)=>{  
+  Course.find()
+  .then(c=>{
+      res.status(200).json(c)
+    }).catch(e=>next(e))
+})
+
 
 router.post('/addCourses',verifyToken, uploadCloud.single('photoURL'), (req,res,next)=>{ 
   if(req.file)req.body['photoURL']=req.file.url
