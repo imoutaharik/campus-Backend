@@ -68,6 +68,7 @@ router.get('/classroomsSelect', verifyToken, (req,res,next)=>{
 
 
 router.post('/addCourses',verifyToken, uploadCloud.single('photoURL'), (req,res,next)=>{ 
+  if(req.file)req.body['photoURL']=req.file.url
   Course.create(req.body)
       .then(course=>{
           res.status(200).json(course)
