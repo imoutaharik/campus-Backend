@@ -5,6 +5,7 @@ const Classroom = require('../models/Classroom')
 const Calendar = require('../models/Calendar')
 const Course = require('../models/Course')
 const passport = require('passport')
+const uploadCloud = require('../helpers/cloudinary')
 
 const {generateToken, verifyToken} = require('../helpers/jwt')
 
@@ -66,7 +67,7 @@ router.get('/classroomsSelect', verifyToken, (req,res,next)=>{
 })
 
 
-router.post('/addCourses',verifyToken,(req,res,next)=>{ 
+router.post('/addCourses',verifyToken, uploadCloud.single('photoURL'), (req,res,next)=>{ 
   Course.create(req.body)
       .then(course=>{
           res.status(200).json(course)
