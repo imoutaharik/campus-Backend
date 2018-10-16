@@ -38,6 +38,7 @@ router.get('/manageStudents', (req,res,next)=>{
 
 router.get('/students/:id', verifyToken, (req,res,next)=>{
   User.findById(req.params.id)
+  .populate('classroom')
   .then(student=>res.status(200).json(student))
   .catch(e=>next(e))
 })
