@@ -29,8 +29,8 @@ router.post('/deleteTeacher', verifyToken, (req,res,next)=>{
   })
 })
 
-router.post('/editStudent', verifyToken, (req,res,next)=>{
-  User.findByIdAndUpdate(req.body._id)
+router.post('/editStudent/:id', verifyToken, (req,res,next)=>{
+  User.findByIdAndUpdate(req.params._id, req.body,{new:true} )
   .then(c=>{
     res.status(201).json(c)
   })
