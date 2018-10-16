@@ -30,7 +30,7 @@ router.post('/deleteTeacher', verifyToken, (req,res,next)=>{
 })
 
 router.get('/manageStudents', (req,res,next)=>{
-  User.find({role:"Student"})
+  User.find({role:"Student"}).populate('classroom')
   .then(users=>{
     res.status(200).json(users)
   }).catch(e=>next(e))
