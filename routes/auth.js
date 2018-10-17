@@ -25,14 +25,14 @@ router.post('/signup', (req,res,next)=>{
     .catch(e=>res.status(500).json(e))
 })
 
-router.get('/admin/manageClassroom', verifyToken,(req,res,next) =>{
+router.get('/admin/getClassrooms', verifyToken,(req,res,next) =>{
     Classroom.find({school:req.user._id})
     .then(classrooms=>{
         res.status(200).json(classrooms)
       }).catch(e=>next(e))
   })
   
-  router.post('/admin/manageClassroom',verifyToken,(req,res,next)=>{
+  router.post('/admin/createClassroom',verifyToken,(req,res,next)=>{
     const {email} = req.body
     const emails = email.split(',')
   

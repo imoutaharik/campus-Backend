@@ -49,7 +49,7 @@ router.post('/editTeacher/:id', verifyToken, (req,res,next)=>{
   })
 })
 
-router.get('/manageStudents', (req,res,next)=>{
+router.get('/getStudents', (req,res,next)=>{
   User.find({role:"Student"})
   .populate('classroom')
   .then(users=>{
@@ -64,14 +64,14 @@ router.get('/students/:id', verifyToken, (req,res,next)=>{
   .catch(e=>next(e))
 })
 
-router.get('/manageTeachers', verifyToken, (req,res,next) =>{
+router.get('/getTeachers', verifyToken, (req,res,next) =>{
   User.find({role:"Teacher"})
   .then(users=>{
       res.status(200).json(users)
     }).catch(e=>next(e))
 })
 
-router.post('/manageTeachers', verifyToken, (req,res,next)=>{
+router.post('/createTeachers', verifyToken, (req,res,next)=>{
     User.register({...req.body, school: req.user._id, role: 'Teacher'}, 'profesor')
     .then(user=>{
       console.log(user)
@@ -102,7 +102,7 @@ router.get('/getallcourses', verifyToken, (req,res,next)=>{
 })
 
 
-router.post('/addCourses',verifyToken, uploadCloud.single('photoURL'), (req,res,next)=>{ 
+router.post('/createCourses',verifyToken, uploadCloud.single('photoURL'), (req,res,next)=>{ 
   if(req.file)req.body['photoURL']=req.file.url
   Course.create(req.body)
       .then(course=>{
