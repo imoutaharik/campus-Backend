@@ -39,6 +39,16 @@ router.post('/editStudent/:id', verifyToken, (req,res,next)=>{
   })
 })
 
+router.post('/editTeacher/:id', verifyToken, (req,res,next)=>{
+  User.findByIdAndUpdate(req.params.id, req.body, {new:true} )
+  .then(c=>{
+    res.status(201).json(c)
+  })
+  .catch(e=>{
+      res.status(500).json(e)
+  })
+})
+
 router.get('/manageStudents', (req,res,next)=>{
   User.find({role:"Student"})
   .populate('classroom')
